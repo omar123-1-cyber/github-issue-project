@@ -7,7 +7,95 @@
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1 class="font-bold text-2xl text-red-400 text-center">hello</h1>
+<body class="p-6 bg-gray-50">
+  <!-- navbar -->
+   <div class="flex justify-between items-center mb-6">
+
+<h1 class="text-2xl font-bold">
+GitHub Issues Tracker
+</h1>
+
+<div class="flex gap-2">
+
+<input id="searchInput"
+class="input input-bordered"
+placeholder="Search issue">
+
+<button onclick="searchIssue()" class="btn btn-primary">
+Search
+</button>
+
+</div>
+
+</div>
+<!--  tabs -->
+<div class="flex gap-3 mb-4">
+
+<button onclick="changeTab('all',this)"
+class="btn btn-sm tab-btn bg-blue-500 text-white">
+All
+</button>
+
+<button onclick="changeTab('open',this)"
+class="btn btn-sm btn-outline tab-btn">
+Open
+</button>
+
+<button onclick="changeTab('closed',this)"
+class="btn btn-sm btn-outline tab-btn">
+Closed
+</button>
+
+</div>
+<!-- Issue Count -->
+
+<div class="mb-4">
+<span class="badge badge-outline">
+Total Issues:
+<span id="issueCount">0</span>
+</span>
+</div>
+<!-- Loading Spinner -->
+
+<div id="loading" class="flex justify-center hidden   mb-4">
+<span class="loading loading-spinner loading-lg"></span>
+</div>
+
+<!-- Issues Grid -->
+
+<div id="issues"
+class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+</div>
+
+<!-- Modal -->
+ <dialog id="issueModal" class="modal">
+
+<div class="modal-box">
+
+<h3 id="modalTitle" class="font-bold text-lg"></h3>
+
+<p id="modalDesc" class="py-2"></p>
+
+<p id="modalAuthor"></p>
+<p id="modalPriority"></p>
+<p id="modalLabel"></p>
+<p id="modalStatus"></p>
+<p id="modalDate"></p>
+
+<div class="modal-action">
+
+<form method="dialog">
+<button class="btn">Close</button>
+</form>
+
+</div>
+
+</div>
+
+</dialog>
+
+<script src="app.js"></script>
+
+
 </body>
 </html>
