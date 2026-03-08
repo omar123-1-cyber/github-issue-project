@@ -101,4 +101,65 @@ async function searchIssue(){
   displayIssues(data.data)
   document.getElementById("loading").classList.add("hidden")
 }
+// Open modal with issue details
+async function openModal(id){
+  const res=await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
+  const data=await res.json()
+  let issue=data.data
+
+  document.getElementById("modalTitle").innerText=issue.title
+
+  document.getElementById("modalDesc").innerHTML=`
+<div class="flex items-center gap-2 mb-3">
+  <span class="badge badge-success">
+    ${issue.status}
+  </span>
+
+  <span class="text-sm text-gray-500">
+    Opened by ${issue.author} • ${issue.createdAt}
+  </span>
+</div>
+
+<div class="flex gap-2 mb-3">
+  <span class="badge badge-error">
+    BUG
+  </span>
+
+  <span class="badge badge-warning">
+    HELP WANTED
+  </span>
+</div>
+
+<p class="text-gray-600 mb-5">
+${issue.description}
+</p>
+
+<div class="flex justify-between">
+  <div>
+    <p class="text-sm text-gray-400">Assignee:</p>
+    <p class="font-semibold">${issue.author}</p>
+  </div>
+
+  <div>
+    <p class="text-sm text-gray-400">Priority:</p>
+    <div class="flex justify-between items-center w-20">
+      <span>
+        ${
+          issue.priority.toLowerCase() === "high" ? 
+          '<span class="rounded-full w-3 h-3 bg-red-500 inline-block"></span>' :
+          issue.priority.toLowerCase() === "medium" ?
+          '<span class="rounded-full w-3 h-3 bg-yellow-500 inline-block"></span>' :
+          '<span>✖</span>'
+        }
+      </span>
+      <p class="ml-1 text-sm font-semibold">${issue.priority.toUpperCase()}</p>
+    </div>
+  </div>
+</div>
+`
+
+  document.getElementById("issueModal").showModal()
+}
+
+// Initial load
 loadIssues()
