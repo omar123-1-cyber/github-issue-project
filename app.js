@@ -77,3 +77,28 @@ class="bg-white shadow-md rounded-lg p-4 ${border} cursor-pointer hover:shadow-l
 `
   })
 }
+// Tabs filter
+function changeTab(type,element){
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.classList.remove("bg-blue-500","text-white")
+    btn.classList.add("btn-outline")
+  })
+
+  element.classList.remove("btn-outline")
+  element.classList.add("bg-blue-500","text-white")
+
+  if(type==="all") displayIssues(allIssues)
+  if(type==="open") displayIssues(allIssues.filter(i=>i.status==="open"))
+  if(type==="closed") displayIssues(allIssues.filter(i=>i.status==="closed"))
+}
+
+// Search issues
+async function searchIssue(){
+  let text=document.getElementById("searchInput").value
+  document.getElementById("loading").classList.remove("hidden")
+  let res=await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${text}`)
+  let data=await res.json()
+  displayIssues(data.data)
+  document.getElementById("loading").classList.add("hidden")
+}
+loadIssues()
